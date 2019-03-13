@@ -3,22 +3,40 @@
 using BinaryBuilder
 
 name = "boost"
-version = v"1.67.0"
+version = v"1.69.0"
 
 # Collection of sources required to build boost
 sources = [
-    "https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.bz2" =>
-    "2684c972994ee57fc5632e03bf044746f6eb45d4920c343937a465fd67a5adba",
-
+    "https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.bz2" =>
+    "8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406",
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
-cd boost_1_67_0/
-./bootstrap.sh --prefix=$prefix --without-libraries=python
-./b2 install
-
+cd boost_1_69_0/
+env CC=$CC_FOR_BUILD ./bootstrap.sh --prefix=$prefix --without-libraries=python --with-toolset=cc
+rm project-config.jam
+toolset=gcc
+targetos=linux
+extraargs=
+if [[ $target == *apple* ]]; then
+targetos=darwin
+toolset=darwin-cross
+extraargs="binary-format=mach-o link=static"
+echo "using darwin : cross : $CXX : <cxxflags>-stdlib=libc++ <linkflags>-stdlib=libc++ ;" > project-config.jam
+elif [[ $target == x86_64*mingw* ]]; then
+targetos=windows
+extraargs="address-model=64 binary-format=pe abi=ms link=shared"
+elif [[ $target == i686*mingw* ]]; then
+targetos=windows
+extraargs="address-model=32 binary-format=pe abi=ms link=shared"
+elif [[ $target == *freebsd* ]]; then
+targetos=freebsd
+toolset=clang-cross
+echo "using clang : cross : $CXX : <linkflags>\\"$LDFLAGS\\" ;" > project-config.jam
+fi
+./b2 -j8 toolset=$toolset target-os=$targetos $extraargs variant=release --prefix=$prefix --without-python --layout=system install
 """
 
 # These are the platforms we will build for by default, unless further
