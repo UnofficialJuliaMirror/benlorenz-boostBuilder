@@ -13,14 +13,22 @@ cache:
     - downloads
 env:
   global:
-    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
-    - BINARYBUILDER_AUTOMATIC_APPLE=false
+  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+  - BINARYBUILDER_AUTOMATIC_APPLE=true
 sudo: required
 
 # Before anything else, get the latest versions of things
 before_script:
-  - julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
-
+- julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
 script:
-  - julia build_tarballs.jl
-
+- julia  --color=yes build_tarballs.jl
+deploy:
+  provider: releases
+  api_key:
+    secure: LlpWrt1p+yBO3vRasm+QsKsnbOcQlcWuYmBUuhvjiPlGvMF/HD8x5Njxx3tIYYisQJ+t9B8B2Z2LE/MwZxCaHUJZ7lSHthf742TaJVXCy6ER2EPTgXyuByBOf21WJYuq/jyUiDI8lDzNjIoJ0Bd9Oqs1rHDNiP5UcHlh1OI91AneCsFx0VkrKnzEPFEbCIRu60bkUYHo/L3FbTvwOXK4+smmxYL5zo3i3K49SsX+sSoxY993fv1lASRPS5YhnkV8JebQMoqHJk/bP/oZKvIlpyMabm+c+Y7JyQosPNMBaROgeASz/ks39zetvc5KNZ84EVmI0Dbl62bpyOCyzImxvSsQrMLr9+pdpX5sKNz2INxKmX666DJ5o33+YLFURxy7/DYE7rISKiKKOflsDCJDOmem39mfcrvYPZHqm9V1BbZljOjY4buhxZJTuvwn0dFpzq42mu62/hqabcMzifDEDfQhEgZdoQEgFChmGfljVJ3KanzIykLL492uRLcM++oAtwB0BwZ0WuFPn4Yk2WAfc9qdtFDdqZ99upEaOqFXvfFcrryKPDOv1V1L8EDDx869HH3K+D0zivHGy0a/LI4MaQOaHSfTi4XDRevJf+GriSZypeB0tG24rRNEx7IQSnMKCqL8mg0oAvPQ0FM8rV25AmkwsltfX41ydNQjte3jGWY=
+  file_glob: true
+  file: products/*
+  skip_cleanup: true
+  on:
+    repo: benlorenz/boostBuilder
+    tags: true

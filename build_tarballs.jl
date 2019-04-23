@@ -3,18 +3,18 @@
 using BinaryBuilder
 
 name = "boost"
-version = v"1.69.0"
+version = v"1.70.0"
 
 # Collection of sources required to build boost
 sources = [
-    "https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.bz2" =>
-    "8f32d4617390d1c2d16f26a27ab60d97807b35440d45891fa340fc2648b04406",
+    "https://dl.bintray.com/boostorg/release/1.70.0/source/boost_1_70_0.tar.bz2" =>
+    "430ae8354789de4fd19ee52f3b1f739e1fba576f0aded0897c3c2bc00fb38778",
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
-cd boost_1_69_0/
+cd boost_1_70_0/
 env CC=$CC_FOR_BUILD ./bootstrap.sh --prefix=$prefix --without-libraries=python --with-toolset=cc
 rm project-config.jam
 toolset=gcc
