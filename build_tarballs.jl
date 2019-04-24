@@ -22,9 +22,9 @@ targetos=linux
 extraargs=
 if [[ $target == *apple* ]]; then
 targetos=darwin
-toolset=darwin-cross
+toolset=darwin-6.0
 extraargs="binary-format=mach-o link=static"
-echo "using darwin : cross : $CXX : <cxxflags>-stdlib=libc++ <linkflags>-stdlib=libc++ ;" > project-config.jam
+echo "using darwin : 6.0 : $CXX : <cxxflags>-stdlib=libc++ <linkflags>-stdlib=libc++ ;" > project-config.jam
 elif [[ $target == x86_64*mingw* ]]; then
 targetos=windows
 extraargs="address-model=64 binary-format=pe abi=ms link=shared"
@@ -33,8 +33,8 @@ targetos=windows
 extraargs="address-model=32 binary-format=pe abi=ms link=shared"
 elif [[ $target == *freebsd* ]]; then
 targetos=freebsd
-toolset=clang-cross
-echo "using clang : cross : $CXX : <linkflags>\\"$LDFLAGS\\" ;" > project-config.jam
+toolset=clang-6.0
+echo "using clang : 6.0 : $CXX : <linkflags>\\"$LDFLAGS\\" ;" > project-config.jam
 fi
 ./b2 -j8 toolset=$toolset target-os=$targetos $extraargs variant=release --prefix=$prefix --without-python --layout=system install
 """
