@@ -55,7 +55,6 @@ products(prefix) = [
     LibraryProduct(prefix, "libboost_program_options", :libboost_program_options),
     LibraryProduct(prefix, "libboost_date_time", :libboost_date_time),
     LibraryProduct(prefix, "libboost_graph", :libboost_graph),
-    LibraryProduct(prefix, "libboost_signals", :libboost_signals),
     LibraryProduct(prefix, "libboost_iostreams", :libboost_iostreams),
     LibraryProduct(prefix, "libboost_stacktrace_addr2line", :libboost_stacktrace_addr2line),
     LibraryProduct(prefix, "libboost_system", :libboost_system),
