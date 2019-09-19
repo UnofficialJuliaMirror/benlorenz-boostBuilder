@@ -3,19 +3,19 @@
 using BinaryBuilder
 
 name = "boost"
-version = v"1.70.0"
+version = v"1.71.0"
 
 # Collection of sources required to build boost
 sources = [
-    "https://dl.bintray.com/boostorg/release/1.70.0/source/boost_1_70_0.tar.bz2" =>
-    "430ae8354789de4fd19ee52f3b1f739e1fba576f0aded0897c3c2bc00fb38778",
+    "https://dl.bintray.com/boostorg/release/1.71.0/source/boost_1_71_0.tar.bz2" =>
+    "d73a8da01e8bf8c7eda40b4c84915071a8c8a0df4a6734537ddde4a8580524ee",
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
-cd boost_1_70_0/
-env CC=$CC_FOR_BUILD ./bootstrap.sh --prefix=$prefix --without-libraries=python --with-toolset=cc
+cd boost_1_71_0/
+env CXX=$CXX_FOR_BUILD ./bootstrap.sh --prefix=$prefix --without-libraries=python --with-toolset=gcc
 rm project-config.jam
 toolset=gcc
 targetos=linux
@@ -23,7 +23,7 @@ extraargs=
 if [[ $target == *apple* ]]; then
 targetos=darwin
 toolset=darwin-6.0
-extraargs="binary-format=mach-o link=static"
+extraargs="binary-format=mach-o link=shared"
 echo "using darwin : 6.0 : $CXX : <cxxflags>-stdlib=libc++ <linkflags>-stdlib=libc++ ;" > project-config.jam
 elif [[ $target == x86_64*mingw* ]]; then
 targetos=windows
