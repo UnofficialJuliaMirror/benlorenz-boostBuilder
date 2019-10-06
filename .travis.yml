@@ -17,19 +17,26 @@ env:
   - BINARYBUILDER_AUTOMATIC_APPLE=true
     # Our build takes too long for one job, so split targets across multiple jobs
   matrix:
-    - PART=1/13
-    - PART=2/13
-    - PART=3/13
-    - PART=4/13
-    - PART=5/13
-    - PART=6/13
-    - PART=7/13
-    - PART=8/13
-    - PART=9/13
-    - PART=10/13
-    - PART=11/13
-    - PART=12/13
-    - PART=13/13
+    - PART=1/20
+    - PART=2/20
+    - PART=3/20
+    - PART=4/20
+    - PART=5/20
+    - PART=6/20
+    - PART=7/20
+    - PART=8/20
+    - PART=9/20
+    - PART=10/20
+    - PART=11/20
+    - PART=12/20
+    - PART=13/20
+    - PART=14/20
+    - PART=15/20
+    - PART=16/20
+    - PART=17/20
+    - PART=18/20
+    - PART=19/20
+    - PART=20/20
 
 sudo: required
 
