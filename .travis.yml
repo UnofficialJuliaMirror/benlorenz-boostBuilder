@@ -17,19 +17,26 @@ env:
   - BINARYBUILDER_AUTOMATIC_APPLE=true
     # Our build takes too long for one job, so split targets across multiple jobs
   matrix:
-    - TARGET=x86_64-linux-gnu
-    - TARGET=i686-linux-gnu
-    - TARGET=x86_64-linux-musl
-    - TARGET=i686-linux-musl
-    - TARGET=aarch64-linux-gnu
-    - TARGET=aarch64-linux-musl
-    - TARGET=arm-linux-gnueabihf
-    - TARGET=arm-linux-musleabihf
-    - TARGET=powerpc64le-linux-gnu
-    - TARGET=x86_64-apple-darwin14
-    - TARGET=x86_64-unknown-freebsd11.1
-    - TARGET=x86_64-w64-mingw32
-    - TARGET=i686-w64-mingw32
+    - PART=1/20
+    - PART=2/20
+    - PART=3/20
+    - PART=4/20
+    - PART=5/20
+    - PART=6/20
+    - PART=7/20
+    - PART=8/20
+    - PART=9/20
+    - PART=10/20
+    - PART=11/20
+    - PART=12/20
+    - PART=13/20
+    - PART=14/20
+    - PART=15/20
+    - PART=16/20
+    - PART=17/20
+    - PART=18/20
+    - PART=19/20
+    - PART=20/20
 
 sudo: required
 
@@ -43,7 +50,7 @@ jobs:
 before_script:
 - julia -e 'using Pkg; pkg"add BinaryProvider"; pkg"add BinaryBuilder#master"; Pkg.build()'
 script:
-- julia  --color=yes build_tarballs.jl $TARGET
+- julia  --color=yes build_tarballs.jl --part=$PART
 deploy:
   provider: releases
   api_key:
